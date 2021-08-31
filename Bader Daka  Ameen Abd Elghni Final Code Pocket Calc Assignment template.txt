@@ -1,0 +1,871 @@
+//BADER DAKA 208219212
+//AMEEN ABD ELGHNI 207888702
+Main,		CLA				//--------------------------|
+		STA	Num1			//
+		STA	Num2			//
+		STA	Oper			//
+		STA	InOutPar1		// Initializing variables
+		STA	InOutPar2		//
+		STA	InOutPar3		//
+		STA	InOutPar4		//
+		STA	InOutPar5		//--------------------------|
+		LDA	Phrase1_Ptr		// 
+		BSA	PhraseCout		// PhraseCout(Phrase1_Ptr);  -> Printing Phrase1
+		BSA	CharInput		// Scanf(Oper);
+		STA	Oper			//
+		ADD	Terminal		// IF (Oper == 'X')
+		SZA				//
+		BUN	ReEnterNumbers		// ELSE
+		HLT				// Return;
+ReEnterNumbers,	LDA	Phrase2_Ptr		//
+		BSA	PhraseCout		// PhraseCout(Phrase2_Ptr);  -> Printing Phrase2
+		LDA	Oper			//------------------------------------------------------------------------|
+		BSA	NumbersInput		//	
+InOutPar1,	HEX 	0			// NumbersInput(Oper,Num1,Num2); -> Getting Num1,Num2
+		STA	Num2			//
+		LDA	Num2			//
+		ADD	exitChar3		//
+		STA	N			//
+		LDA	N			//
+		SZA				// if (Num2 == 40000)  *[means that there's a char input error]
+		BUN	A			// THEN { Goto ReEnterNumbers }	
+		BUN	ReEnterNumbers		// ELSE	
+A,		LDA	InOutPar1 		//
+		STA	Num1			//------------------------------------------------------------------------|
+		LDA	Num1			//
+		ADD	exitChar3		//
+		STA	N			//
+		LDA	N			//
+		SZA				// if (Num2 == 40000)  *[means that there's a char input error]
+		BUN	OperPlusCheck			// THEN { Goto ReEnterNumbers }	
+		BUN	ReEnterNumbers		//		
+OperPlusCheck,	LDA	Oper			// IF (Oper == '+')
+		ADD	Plus			//
+		SZA				//
+		BUN 	OperMinusCheck		// Else { Goto OperMinusCheck }
+		LDA	Num1			// Then
+		STA	InOutPar2		// {
+		LDA	Num2			//
+		BSA	AddFunc			// AddFunc(Num1,Num2); }
+InOutPar2,	HEX	0			//
+		STA	TMP			//
+R1,		LDA	TMP			//
+		BSA	ResultCout		// ResultCout(AC); -> AC holds The return value of  AddFunc "(result)"
+		BUN	Main			//                                                   
+OperMinusCheck,	LDA	Oper			// 
+		ADD	Minus			//
+		SZA				// IF (Oper == '-')
+		BUN	OperMultCheck		// Else { Goto OperMultCheck }
+		LDA	Num1			// Then
+		STA	InOutPar3		// {
+		LDA	Num2			//
+		BSA	MinusFunc		// MinusFunc(Num1,Num2); }
+InOutPar3,	HEX	0			//
+		STA	TMP			//
+R2,		LDA	TMP			//
+		BSA	ResultCout		// ResultCout(AC); -> AC holds The return value of MinusFunc "(result)"
+		BUN	Main			//			   
+OperMultCheck, 	LDA	Oper			//
+		ADD	Multiply		//
+		SZA				// IF (Oper == '*')
+		BUN	OperDivCheck		// Else { Goto OperDivCheck }
+		LDA	Num1			// Then
+		STA	InOutPar4		// {
+		LDA	Num2			//
+		BSA	MultiplyFunc		// MultiplyFunc(Num1,Num2); }
+InOutPar4,	HEX	0			//
+		STA	TMP			//
+R3,		LDA	TMP			//
+		BSA	ResultCout		// ResultCout(AC); -> AC holds The return value of MultiplyFunc "(result)"
+		BUN	Main			//                                            
+OperDivCheck,	LDA	Oper			//
+		ADD	Divide			//
+		SZA				// IF (Oper == '/')
+		BUN	InvOP			// Else { Goto OperDivCheck }
+		LDA	Num1			// Then
+		STA	InOutPar5		// {
+		LDA	Num2			//
+		BSA	DivideFunc		// DivideFunc(Num1,Num2); }
+InOutPar5,	HEX	0			//
+		STA	TMP			//
+R4,		LDA	TMP			//
+		BSA	ResultCout		// ResultCout(AC); -> AC holds The return value of  DivideFunc "(result)"
+		LDA	Phrase6_Ptr		//
+		BSA	PhraseCout		// PhraseCout(Phrase6_Ptr);  -> Printing Phrase6
+		LDA	DivTmpNum1		//
+		BSA	ResultCout		//
+		BUN	Main			//	                                
+InvInput,	LDA	Phrase3_Ptr		//
+		BSA	PhraseCout		// PhraseCout(Phrase3_Ptr);  -> Printing Phrase3
+		BUN	Main			//
+InvOP,		LDA	Phrase5_Ptr		//
+		BSA	PhraseCout		// PhraseCout(Phrase5_Ptr);  -> Printing Phrase5
+		BUN	Main			//
+						//
+//Main Data					//
+Plus,		DEC 	-43 			// Minus '+' ascii
+Minus,		DEC 	-45			// Minus '-' ascii
+Multiply,		DEC	-42		// Minus '*' ascii
+Divide,		DEC	-47			// Minus '/' ascii
+Num1,		DEC	0			//
+Num2,		DEC	0			//
+Oper,		DEC	0			// Current exercise operator 
+Terminal,	DEC 	-88			// Minus 'X' ascii -> the termination character
+exitChar3,	DEC	-40000			// minus out of range number
+Phrase1_Ptr,   	HEX 	600			//
+Phrase2_Ptr,	HEX 	700			//
+Phrase3_Ptr,	HEX 	800			//
+Phrase5_Ptr,	HEX	900			//
+Phrase6_Ptr,	HEX	950			//
+ERROR,		DEC	2			//
+ERROR1,		DEC	4			//
+NAM,		DEC	1			//
+TMP,		DEC     0			//
+N,		DEC 	0			//
+T1,		DEC	3			//
+T2,		DEC	4			//
+T3,		DEC	4			//	
+
+                            /////////////////////////////                                   	
+                           // FUNCTIONS  ///////////////      		
+                          /////////////////////////////                                 	
+                                                     	     		
+PhraseCout,	HEX	0			// void PhraseCout(char* index)
+		STA 	TmpPtr			// *** Gets a ptr which points to an array of chars and prints it ***
+		LDA	TmpPtr I		//   
+Output,		SKO				// 
+		BUN	Output			// While (array[index] != '#') -> "index = TmpPtr"
+		OUT				// {	Cout<<array[index];
+		ISZ	TmpPtr			// 
+		LDA	TmpPtr I		//
+		ADD	Sulamit			//
+		SZA				//
+		BUN	PhraseContinue		//
+		BUN 	PhraseCout I		//
+PhraseContinue,	LDA	TmpPtr I		// 
+		BUN	Output			// }
+						//
+//Func Data					//
+TmpPtr,		DEC	0			//
+Sulamit,	DEC	-35			//
+						//
+CharInput,	HEX	0			// char CharInput(stdin)
+Input,		SKI				// *** Gets an operator from user ***
+		BUN	Input			//
+		INP				//
+		OUT				// Cout<<Oper;
+		BUN	CharInput I		//
+						//
+CharsToInt, 	HEX	0			// int CharsToInt(stdin)
+		CLA				// *** Gets chars from user and turns them to an integer number  ***
+						//				           
+		STA	tempChar		// Initialize tempChar 
+		SKI				// while (scanf(TempoChk)  != ‘CReturn’) {  	
+		BUN	CharsToInt		//
+		INP				// }
+		STA	TempoChk		// 
+		BSA	CharValidation		// CharValidation(TempoChk); -> Checks validation for current entered number 
+						//				              
+		SZA				// IF (CharValidation(TempoChk) ==  1)
+		BUN	exitInvChar		// THEN  { Goto exitInvChar; } *[1- char invalid, 0- valid]
+		LDA	TempoChk		// Else
+		ADD	NegativeSign		// 
+		SZA				// IF (TempoChk == '-')
+		BUN	NotNegative		// ELSE { Goto NotNegative }
+		LDA	MakeNegative		// THEN {
+		INC				// 
+		STA	MakeNegative		//	MakeNegative = 1;   *(1 means that Num is negative)
+		LDA	TempoChk		//
+		OUT				//	Cout<<TempoChk;
+		BUN	CharsToInt		// }
+NotNegative,	LDA	TempoChk		//
+CharOutput,	SKO				//
+		BUN	CharOutput		//
+		STA	temptemp		// ----------------------------------------------------|
+		ADD	minusCReturn		// if (temptemp == 'CR')
+		SZA				// ELSE { Goto Echo }	
+		BUN	Echo			//
+ContEcho,	LDA	temptemp		// Then 
+		STA	tempChar		// {
+		ADD 	minusCReturn		//
+		SZA				//  	if (tempChar == 'CR')
+		BUN 	Convert			// 	ELSE { Goto Convert }
+		BUN	End_loop		// 	THEN { Goto End_loop } } ----|
+Convert, 	LDA	tempChar		// -----------------------------------|
+		ADD	ASCII_zero 		// tempChar = tempChar – 48;
+		STA	tempChar		// -----------------------------------|
+		LDA	Num			// 
+		BSA	MultBy10		// -------------------------------------| 
+		ADD	tempChar		// Num = Num * 10 + tempChar;
+		STA	Num			// -------------------------------------|
+		BUN	CharsToInt		// 
+End_loop,	LDA	MakeNegative		// -------------------------------------------------------|
+		SZA				// if (MakeNegative == 0)
+		BUN	itsNegative		// ELSE { Goto itsNegative }
+		LDA	Num			// THEN { return Num; }      *[Num is positive]
+		SNA				//
+		BUN	CharsToInt I		// make sure its postive
+		BUN	InvInput		// -------------------------------------------------------|
+itsNegative,	CLA				//
+		STA	MakeNegative		// ---------------------------------------------|
+		LDA	Num			//
+		CMA				// return Num;       *[Num is negative]
+		INC				//
+		SPA				// make sure its negative				
+		BUN	CharsToInt I		// ---------------------------------------------|
+		BUN 	InvInput		//
+Echo,		LDA	temptemp		//
+		OUT				// Cout<<temptemp;
+		BUN	ContEcho		//
+exitInvChar,	LDA	exitChar1		// return exitChar1;
+		BUN	CharsToInt I		// *[means that there's a char input error]
+						//
+//Func Data					//
+Num,		DEC	 0			// the integer we get from the char(s) sequence
+tempChar,   	DEC	 0			// 
+ASCII_zero,	HEX	-30			// Minus ascii offset
+minusCReturn,	HEX	 -D			// 
+temptemp,	DEC	0			//
+TempoChk,	DEC	0			//
+NegativeSign,	DEC	-45			// Minus '-' ascii
+MakeNegative,	DEC	0			// = 0 -> means Num is positive , = 1 -> Num is negative
+exitChar1,	DEC	40000                   // out of range number
+						//
+MultBy10,	HEX	0			// int  MultBy10(int Num)
+		CLE				// *** gets an integer and multiply it by 10 ***
+		CIL				// ------------------------|
+		SZE				//
+		BUN	InvInput		//
+		CIL				// 
+		SZE				//
+		BUN	InvInput		//	CHECK IF NUMBER BIT >16 BIT
+		CIL				// 	THEN INVINPUT
+		SZE				//	ELSE Continue
+		BUN	InvInput		//
+		ADD 	Num			// 
+		SZE				//
+		BUN	InvInput		//
+		ADD 	Num			// Num = Num * 10; 
+		SZE				//
+		BUN	InvInput		//
+		BUN	MultBy10   I 		// return Num;
+						// ------------------------|
+						//
+CharValidation,	HEX	0			// int CharValidation(char TmpVChar)
+		STA	TmpVChar		// *** gets a char and checks if it is (CR,Minus or between	
+		ADD	CrVChk			//                                                                                    0-9) ***
+		SZA				// IF (TmpVChar == 'CR')
+		BUN	ChkMinus		// Else { goto ChkMinus; } 
+		BUN	VSuccess		// Then { Return; }
+ChkMinus,	LDA	TmpVChar		//
+		ADD	MinusVChk		//
+		SZA				// IF (TmpVChar == '-')
+		BUN	StartVChk		// Else { goto StartVChk; }
+		BUN	VSuccess		// Then { Return; }
+StartVChk,	LDA	TmpVChar		//
+		ADD	MinAscii	        //
+		SNA				// IF (TmpVChar < MinAscii) 
+		BUN	NextVChk		// Else { goto NextVChk; }
+		BUN	VFail			// Then { goto VFail; }			
+NextVChk,	LDA	TmpVChar		// 
+		ADD	MaxAscii		//
+		SPA				// IF (TmpVChar > MaxAscii)
+		BUN	VSuccess		// Else { goto VSuccess; }
+		BUN	VFail			// Then { goto VFail; }
+VSuccess,	CLA				//
+		BUN	CharValidation I	// Return 0 (Success);
+VFail,		LDA	TmpVChar		//
+		OUT				//
+		LDA	ErrorVPtr		//
+		BSA	PhraseCout		// PhraseCout(ErrorVPtr);  -> Printing Phrase5
+		LDA	TmpVFail		//
+		BUN	CharValidation I	// Return 1 (Fail);
+//Func Data					//
+ErrorVPtr,	HEX	900			//
+TmpVChar,	DEC	0			//
+MinAscii,	DEC	-48			// Minus '0'
+MaxAscii,	DEC	-57			// Minus '9'
+TmpVFail,	DEC	1			//
+CrVChk,		HEX	-D			// Minus 'CR'
+MinusVChk,	DEC	-45			// Minus '-'
+						//
+NumbersInput,	HEX	0			// void NumbersInput(int*,int*) 
+		STA	tmpOper			// *** Manages inputs and echos the operator to screen ***
+		CLA				//
+		STA	Num			//
+		BSA	CharsToInt		//
+		STA	NumbersInput I		//
+		ADD	exitChar2		//
+		SZA				// if (AC == 40000)  *[means that there's a char input error]
+		BUN	contTmpOper		// ELSE
+		LDA	exitChar2		// THEN {
+		ISZ	NumbersInput		// return exitChar2;
+		BUN	NumbersInput I		// }
+contTmpOper,	LDA	tmpOper			//
+		OUT				//
+		CLA				//
+		STA	Num			//
+		ISZ	NumbersInput		//
+		BSA	CharsToInt		//
+		BUN	NumbersInput I		// if there's a char input error,  the function "NumberValidation"
+//Func Data					// handles this case
+tmpOper,	DEC	0			//
+exitChar2,	DEC	-40000			// minus out of range number
+						// 
+AddFunc,	HEX	0			// int AddFunc(int num1,int num2)
+		STA 	AddTmpNum2		// *** Adds two numbers ***
+		LDA	AddFunc I		//
+		ADD	AddTmpNum2		//
+		STA	ResultAdd		//
+		CLA				//
+		CLE				//IF ( Xmsb == Ymsb )
+		STA	addV			//{
+		LDA	AddFunc I		//THEN IF ( Xmsb != Rmsb )
+		CIL				//THEN V =1  // printf("Big Number" )//Over&&Under
+		CLA				//ELSE  Return R;
+		CIL				//FI	
+		STA	Xmsb			//}
+		LDA	AddTmpNum2		//
+		CIL				//		
+		CLA				//
+		CIL				//
+		CMA				//
+		INC				//
+		ADD	Xmsb			//
+		SZA				//	
+		BUN	AddReturn		//
+		LDA	ResultAdd		//
+		CIL				//
+		CLA				//
+		CIL				//
+		CMA				//
+		INC				//
+		ADD	Xmsb			//
+		SZA				//	check(onder/overflow)
+		BUN	InvInput		//
+AddReturn,	LDA	ResultAdd		//
+		ISZ	AddFunc			//
+		BUN	AddFunc I		// Return (Num1+num2);
+//Func Data					//
+AddTmpNum2,	DEC	0			//
+addV,		DEC	0			//
+Xmsb,		DEC	0			//
+Ymsb,		DEC	0			//
+ResultAdd,	DEC	0			//
+						//
+MinusFunc,	HEX	0			// int MinusFunc(int num1,int num2)
+		CMA				// *** Subtracts two numbers ***
+		INC				//
+		STA 	MinTmpNum2		// MinTmpNum2 = -MinTmpNum2 
+		LDA	MinusFunc I		//
+		ADD	MinTmpNum2		//
+		ISZ	MinusFunc		//
+		BUN	MinusFunc I		// Return (Num1-Num2);
+//Func Data					//
+MinTmpNum2,	DEC	0			//
+						//
+
+MultiplyFunc,	HEX	0			//	
+		STA	MULTIPLICAND		//	MULTIPLICAND = NUM1
+		LDA	MultiplyFunc I		//		
+		STA	MULTIPLIER		//	MULTIPLIER = NUM2
+		ISZ	MultiplyFunc		//
+		LDA	MULTIPLICAND
+		SZA	
+		BUN 	CON1			// CHECK IF ONE OF THE NUMBER IS ZERO IF ONE OF THEM IS ZERO IS
+		CLA				//	THE RESULT IS ZERO
+		STA	RESULT1			//
+		LDA	RESULT1			//
+		BUN	MultiplyFunc I		//
+CON1,		LDA	MULTIPLIER		//
+		SZA				//
+		BUN	CON2			//
+		CLA				//
+		STA	RESULT1			//
+		LDA	RESULT1			//
+		BUN	MultiplyFunc I		//
+CON2,		CLE				//CHECK FOR SIGN
+		CLA				//		
+		STA	SIGN			//	SIGN = 0
+		STA	SIGN1			//	SIGN1 = 0
+		STA	POSITIVE1		//	POSITIVE1 = 0
+		STA	RESULT1			//	RESULT1 = 0
+		STA	DIGIT_COUNT1		//	DIGIT_COUNT1 = 0
+		LDA	INIT_DIGIT		//		
+		STA	DIGITS			//	DIGITS = -16
+		LDA	MULTIPLICAND		//		
+		SPA				//	IF (MULTIPLICAND > 0)
+		BUN	CHECK2			//		
+		LDA	SIGN			//		
+		INC				//		
+		STA	SIGN			//		THEN SIGN = 1  multiplicand is positive
+		BUN	DO4			//		
+CHECK2,		CLA				//		
+		STA	SIGN			//		ELSE {
+		LDA	MULTIPLICAND		//		SIGN = 0  multiplicand is negative
+		CMA				//		
+		INC				//		MULTIPLICAND = MULTIPLICAND*(-1)
+		STA	MULTIPLICAND		//		}
+DO4,		LDA	MULTIPLIER		//	
+		SPA				//	IF	(MULTIPLIER > 0)
+		BUN	CHECK3			//		
+		LDA	SIGN1			//		
+		INC				//		
+		STA	SIGN1			//		THEN SIGN1 = 1 multiplier is positive
+		BUN	CHECK4			//		
+CHECK3,		CLA				//		
+		STA	SIGN1			//		ELSE {
+		LDA	MULTIPLIER		//		SIGN1 = 0 multiplier is negative
+		CMA				//		MULTIPLIER = MULTIPLIER*(-1)
+		INC				//		}
+
+		STA	MULTIPLIER		//	FI	
+CHECK4,		LDA	SIGN1			//		
+		CMA				//		
+		INC				//		
+		ADD	SIGN			//		
+		SZA				//	IF	(SIGN1 == SIGN)
+		BUN	ELSE2			//		
+		CLA				//		
+		INC				//	
+		STA	POSITIVE1		//	THEN POSITIVE1 = 1 means positive result
+		BUN	FOR_LOOP1		//	
+ELSE2,		CLA				//	
+		STA	POSITIVE1		//	ELSE POSITIVE1 = 0 means negative result
+						// 
+ 
+FOR_LOOP1,	LDA	DIGIT_COUNT1		// FOR (DIGIT_COUNT1 = 0; DIGIT_COUNT1<16; DIGIT_COUNT1++)
+		ADD	DIGITS			//	
+		SZA				//	
+		BUN	BODY			//	
+		BUN	END_LOOP1		//	
+
+BODY,		LDA	MULTIPLIER		//	BINARY MULTIPLICATION
+		CIR				//	
+		STA	MULTIPLIER		//	SKIP IF E==0
+		SZE				//	
+		BUN	THEN1			//	
+		BUN	FI1			//	
+THEN1,		LDA	RESULT1			//	 RESULT+=MULTIPLICAND
+		ADD	MULTIPLICAND		//	
+		STA	RESULT1			//	
+FI1,		LDA	MULTIPLICAND		//	THEN CIL MUTIPLIER
+		CIL				//	
+		STA	MULTIPLICAND		//	
+		ISZ	DIGIT_COUNT1		//	
+		BUN	FOR_LOOP1		//	
+	
+END_LOOP1,	LDA	POSITIVE1		//	
+		SZA				//	IF (POSITIVE1 == 0)
+		BUN	POSITIVE2		//	
+		BUN	NEGATIVE1		//	
+POSITIVE2,	LDA	RESULT1			//
+		SNA				//
+		BUN	MultiplyFunc I		//	RETURN RESULT
+		BUN	InvInput		//
+NEGATIVE1,	LDA	RESULT1			//	
+		SPA				//
+		BUN	InvInput		//
+		CMA				//	
+		INC				//	
+		BUN	MultiplyFunc I		//	RETURN -RETSULT
+
+//MULT_FUNC DATA				//	
+INIT_DIGIT,	DEC	-16			//	FOR RUNNING OVER 16 BITS NUMBER
+SIGN1,		DEC	0			//		
+SIGN,		DEC	0			//	
+POSITIVE1,	DEC	0			//		
+MULTIPLICAND,	DEC	0			//	
+MULTIPLIER,	DEC	0			//	
+DIGIT_COUNT1,	DEC	0			//	FOR RUNNING OVER A 16 BITS NUMBER
+DIGITS,		DEC	-16			//		
+RESULT1,	DEC	0			//	RESULT
+
+						//
+DivideFunc,	HEX	0			// int DivideFunc(int Num1,int Num2)
+		STA 	DivTmpNum2		// *** Gets 2 numbers and returning the division result between them ***
+		SZA				//                                                           
+		BUN	NextDivChk		//
+		LDA	DivErrorPtr		// checking for division by zero...
+		BSA	PhraseCout		// PhraseCout(DivErrorPtr); -> Printing Phrase4
+		BUN	Main			//
+NextDivChk,	CLA				//
+		STA	DivSum			// ---------------| 
+		STA	doesNum1Minus		// initialize
+		STA	doesNum2Minus		// ---------------|
+		LDA	DivTmpNum2		// 
+		BSA	whatSign		//
+		SNA				// IF (whatSign(MultTmpNum2) == 0)
+		BUN	pospos2			// Else { Goto MultLoop }                  *[meaning Num2 is positive]
+		STA	doesNum2Minus		// Then { doesNum2Minus = -1; }    	   *[meaning Num2 is negative]
+		BUN	2ndChk			//
+pospos2,	LDA	DivTmpNum2		//
+		BSA	makeItNeg		// 
+		STA	DivTmpNum2		// DivTmpNum2 = makeItNeg(DivTmpNum2);
+2ndChk,		LDA	DivideFunc I		//
+		STA 	DivTmpNum1		//
+		BSA	whatSign		//
+		SNA				// IF (whatSign(MultTmpNum1) == 0)
+		BUN	contDiv			// THEN { Goto contDiv }   *[meaning DivTmpNum1 is positive]
+		STA	doesNum1Minus		// ELSE {                  *[meaning DivTmpNum1 is negative]
+		LDA	DivTmpNum1		//
+		BSA	AbsoluteVal		// DivTmpNum1 = AbsoluteVal(DivTmpNum1);
+		STA	DivTmpNum1		// }
+contDiv,	LDA	DivTmpNum1		//
+DivLoop,	SPA				//
+		BUN	DivEnd			//
+		ADD	DivTmpNum2		// DivTmpNum1 = DivTmpNum1 - DivTmpNum2;
+		SNA				// if (DivTmpNum1 < 0)
+		BUN	DivContinue		// ELSE { Goto DivContinue }
+		BUN	DivEnd			// THEN { DivEnd }
+DivContinue,	LDA	DivSum			//
+		INC				//
+		STA	DivSum			// DivSum++;
+		LDA	DivTmpNum1		//
+		ADD	DivTmpNum2		//
+		STA	DivTmpNum1		// DivTmpNum1 = DivTmpNum1 - DivTmpNum2;
+		BUN	DivLoop			//
+DivEnd,		LDA	doesNum1Minus		//
+		STA	InOutPar7		//
+		LDA	doesNum2Minus		//
+		BSA	ResultSign		// AC = ResultSign(doesNum1Minus, doesNum2Minus);
+InOutPar7,	Hex	0			//
+		SNA				// if (ResultSign(doesNum1Minus, doesNum2Minus) == 0)
+		BUN	finalpos		// THEN { Goto finalpos }   *[meaning the result should be positive]
+		BUN	finalNeg		// ELSE { Goto finalNeg }    *[meaning the result should be negative]
+                                                //                                                                                
+finalNeg,	LDA	DivSum			//
+		CMA				// DivSum = -DivSum;
+		INC				//
+rtrn,		ISZ	DivideFunc		//
+		BUN	DivideFunc I		// return DivSum;
+finalPos,	LDA	DivSum			//
+		BUN	rtrn			//
+						//
+//Func Data					//
+DivErrorPtr,	HEX	850			// Pointer to Array "phrase7"				
+DivTmpNum1,	DEC	0			// temporary Num1
+DivTmpNum2,	DEC	0			// temporary Num2
+DivMinus1,	DEC	-1			//
+DivSum,		DEC	0			// Represents the Sum of the division process
+doesNum2Minus,	DEC	0			// Represents the Sign of temporary Num2 [ (-) (+) ]
+doesNum1Minus,	DEC	0			// Represents the Sign of temporary Num1 [ (-) (+) ]
+						//
+whatSign,	HEX	0			// int whatSign(int AC)
+		SNA				// *** Gets an integer and returns its sign (0 = positive, -1 = negative) ***
+		BUN 	1st			//                                                                 
+		LDA	Negativee		//
+		BUN	whatSign I		//
+1st,		LDA	Pos			//
+		BUN	whatSign I		//
+//Func data					//
+Negativee,	DEC	-1			//
+Pos,		DEC	0			//
+						//
+AbsoluteVal,	HEX	0			// int AbsoluteVal(int AC)
+		SNA				// *** Gets an integer and returns its absolute value ***
+		BUN	returnValP		//
+		CMA				//
+		INC				//
+returnValP,	BUN	AbsoluteVal I		//
+						//
+makeItNeg,	HEX	0			// int makeItNeg(int AC)
+		SPA				// *** Gets an integer and returns it with a Minus sign ***
+		BUN	returnValM		//
+		CMA				//
+		INC				//
+returnValM,	BUN	makeItNeg I		//
+						//
+ResultSign,	HEX	0			// int ResultSign(int a, int b) 
+		STA	tmpNo2			// *** Gets 2 integers which represents the signs of their linked 
+		LDA	ResultSign I		//        integer numbers and decides the general result between
+		STA	tmpNo1			//        them. e.g: (-) (-) ---> (+) ***
+		SNA				// if (tmpNo1 < 0)
+		BUN	plusplus		// ELSE { Goto plusplus }
+		BUN	minusminus		// THEN { Goto minusminus }
+plusplus,	LDA	tmpNo2			//
+		SNA				// if (tmpNo2 < 0)
+		BUN	returnPluss		// ELSE { Goto returnPluss }
+		BUN	returnMinuss		// THEN { Goto returnMinuss }
+minusminus,	LDA	tmpNo2			//
+		SNA				// if (tmpNo2 < 0)
+		BUN	returnMinuss		// ELSE { Goto returnMinuss }
+		BUN	returnPluss		// THEN { Goto returnPluss }
+returnMinuss,	LDA	Negativeee		//
+endd,		ISZ	ResultSign		//
+		BUN	ResultSign I		// return AC;            *[0 for positive, -1 for negative]
+returnPluss,	LDA	Positiveee		//
+		BUN	endd			//
+//Func Data					//
+tmpNo2,		DEC	0			//
+tmpNo1,		DEC	0			//
+Negativeee,	DEC	-1			//
+Positiveee,	DEC	0			//
+						//
+print,		HEX	0			// void print(int tmpResult)			
+		STA	tmpResult		// *** Gets an integer and prints it by units to the screen ***
+		CLA				// -------------------|
+		STA	FLAGG			//
+		STA	Stripped		//
+		STA	Digit			// initialize
+		LDA	FixedCount		//
+		STA	Count			//--------------------|
+		LDA	Power10Ptr		//
+		STA	Ptr			// Ptr points to Array "Power10Array"
+		LDA	tmpResult		// IF (tmpResult <0)
+		SNA				// {
+		BUN	Positive		//
+Negative, 	LDA	tmpResult		// THEN 
+		CMA				//  
+		INC				//
+		STA	Stripped		// stripped = -tmpResult;
+		LDA	Sign_ascii		//
+		BSA	OutChar			//
+		BUN	ForLoop			// 
+Positive,	LDA	tmpResult		//  
+		STA	Stripped		// ELSE stripped = tmpResult;
+						// }
+ForLoop,	LDA	Count			// FOR (Count=FixedCount; Count > 0; Count--) 
+		SPA				//
+		BUN	EndFor			//
+		CLA				// DO digit =0; 
+		STA	Digit			//
+OutLoop,	LDA	Ptr  I			// WHILE (Stripped - Power10Array[Ptr]  > 0)
+		ADD	Stripped		// DO
+		SNA				//
+		BUN 	OutContinue		//
+		BUN	Outx			//
+OutContinue,	STA	Stripped		// Stripped=Stripped - Power10Array[Ptr];   
+		ISZ	Digit			// digit++;
+		LDA	ONE_1			//
+		STA	FLAGG			//			
+		BUN	OutLoop			// 
+Outx,		LDA	FLAGG			//
+		SPA				//IF(FLAGG>0)
+		BUN	COO			//ELSE(CONTINUE)
+		LDA	Digit			// THEN(PRINT(Digit)
+		ADD	ascii_Offset		//
+		BSA	OutChar			//
+COO,		ISZ	Ptr  			// ptr++;
+		LDA	count			// Count--;
+		ADD	pMinus1			//
+		STA	Count			//
+		BUN	ForLoop			// 
+EndFor,		LDA	Stripped		//
+		ADD	ascii_Offset		//
+		BSA	OutChar			// Output(last digit);  ( the left over in ACC)
+End,		CLA				//
+		BUN	print I			// return;
+						//
+// Func Data					//
+tmpResult,	DEC	0			//
+Digit,		DEC	0			//
+Sign_ascii,  	HEX	2D			// the "-"  character
+ascii_Offset, 	HEX	30			// digit to ascii representation offset
+Stripped,	DEC	0			// Represents a dynamic stripping of "tmpResult" from start to end
+ONE_1,		DEC	1			//
+FLAGG,		DEC	0   
+                                                                     
+pMinus1,	DEC	-1			//
+FixedCount,	DEC	4			// Represents the Fixed number of loops
+count,		DEC	0			// Represents the number of loops decided by "FixedCount"
+Power10Ptr, 	HEX 	400			// Fixed pointer to Array "Power10Array"
+Ptr,		HEX	0			// pointer to "Power10Array" (-10 to power of 1,2,3,4 )  [decided by "Power10Ptr"]
+						//                                         
+		ORG	400			//
+Power10Array,  	DEC	-10000			// -10 to power of 4
+		DEC	-1000			// -10 to power of 3
+		DEC	-100			// -10 to power of 2
+		DEC	-10			// -10 to power of 1
+						//
+OutChar,	HEX	0			// void OutCHar(char)
+Out,		SKO				// {
+		BUN	Out			//
+		OUT				// print(char);
+		BUN 	OutChar I		// }
+						//
+ResultCout,	HEX	0			// void ResultCout(Result)
+		STA	Result			// *** prints array "phrase4" and afterwards the integer "Result" ***
+		LDA	ArrStart		//                                                                      
+		STA	ArrPtr			//
+		LDA	ArrPtr I		//
+ResOutput,	SKO				//
+		BUN	ResOutput 		//
+		OUT				// 
+		ISZ 	ArrPtr			//
+		LDA	ArrPtr I		//
+		ADD	Space			//
+		SZA				// if (phrase4[ArrPtr] == ' ')
+		BUN	contArr			// ELSE { Goto contArr }
+		LDA	Result			// THEN { 
+		BSA	Print			//
+		CLA				//
+		STA	Result			// }
+		BUN	ResultCout I		// return;
+contArr,	LDA	ArrPtr I		//
+		BUN	ResOutput		//
+//Func Data					//
+Result,		DEC	0			// gets its value from AC
+CR,		HEX	D			// Carriage Return
+Space,		DEC	-32			// Minus ' ' ascii value
+ArrStart,	HEX	500			// Fixed pointer to array "Phrase4"
+ArrPtr,		HEX	0			// gets its pointing value from ArrStart
+		ORG	500			//
+Phrase4,	DEC	61			// "= "
+		DEC	32			//
+
+		ORG 	600			//
+phrase1,	HEX	D			// "Please choose operator +,-,*,/ (X to end):"
+		DEC 	80		        // 
+		DEC 	108 			//
+		DEC 	101			//
+		DEC 	97			//
+		DEC	115			//
+		DEC 	101			//
+		DEC	32			//
+		DEC	99			//
+		DEC 	104			//
+		DEC	111			//
+		DEC 	111			//
+		DEC 	115			//
+		DEC 	101			//
+		DEC 	32			//
+		DEC 	111			//
+		DEC 	112			//
+		DEC 	101			//
+		DEC	114			//
+		DEC	97			//
+		DEC 	116			//
+		DEC 	111			//
+		DEC 	114			//
+		DEC 	32			//
+		DEC	43			//
+		DEC 	44			//
+		DEC	45			//
+		DEC 	44			//
+		DEC 	42			//
+		DEC 	44			//
+		DEC 	47			//
+		DEC 	32			//
+		DEC	40 			//
+		DEC 	88			//
+		DEC	32			//
+		DEC	116			//
+		DEC 	111			//
+		DEC 	32			//
+		DEC 	101			//
+		DEC 	110			//
+		DEC 	100			//
+      		DEC 	41			//
+		DEC 	58			//
+		DEC	35			//
+						//
+		ORG 	700			//
+phrase2,	HEX	D			// "Please enter two numbers:"
+		DEC 	80			//
+		DEC 	108 			//
+		DEC 	101			//
+		DEC 	97			//
+		DEC 	115			//
+		DEC 	101			//
+		DEC 	32			//
+		DEC 	101			//
+		DEC 	110			//
+		DEC 	116			//
+		DEC 	101			//
+		DEC 	114			//
+		DEC 	32			//
+		DEC 	116 			//
+		DEC 	119			//
+		DEC 	111			//
+		DEC 	32			//
+		DEC 	110			//
+		DEC 	117			//
+		DEC 	109			//
+		DEC 	98			//
+		DEC 	101			//
+		DEC 	114			//
+		DEC 	115			//
+		DEC 	58			//
+		DEC 	32			//
+		DEC	35			//
+						//
+		ORG 	800			//
+phrase3,	HEX	D			// "Big Number"
+		DEC 	66			//
+		DEC 	105			//
+		DEC 	103			//
+		DEC	32			//
+		DEC 	78			//
+		DEC 	117			//
+		DEC 	109			//
+		DEC 	98			//
+		DEC 	101			//
+		DEC 	114			//
+		DEC 	32			//
+		DEC	35			//	
+						//
+		ORG 	900			//
+phrase5,	HEX	D			// "Invalid input, try again"
+		DEC 	73			//
+		DEC 	110 			//
+		DEC 	118			//
+		DEC 	97			//
+		DEC 	108			//
+		DEC 	105			//
+		DEC 	100			//
+		DEC 	32			//
+		DEC 	105			//
+		DEC 	110			//
+		DEC 	112			//
+		DEC 	117			//
+		DEC 	116			//
+		DEC	44			//
+		DEC	32			//
+		DEC 	116			//
+		DEC 	114			//
+		DEC 	121			//
+		DEC 	32			//
+		DEC 	97			//
+		DEC 	103			//
+		DEC 	97			//
+		DEC 	105			//
+		DEC 	110			//
+		HEX	D			//
+		DEC 	35			//
+		
+		ORG	950			//
+phrase6,	DEC	32			//
+		DEC	82			//
+		DEC	101			//	"Remainder"
+		DEC	109			//
+		DEC	97			//
+		DEC	105			//
+		DEC	110			//
+		DEC	100			//
+		DEC	101			//
+		DEC	114			//
+		DEC	35			//
+		
+		ORG	850
+phrase7,	DEC	13			//
+		DEC	69  			//
+		DEC	82  			// ERROR: Divison by 0
+		DEC	82  			//
+		DEC	79  			//
+		DEC	82			//
+		DEC	58			//
+		DEC	32			//
+		DEC	68			//	
+		DEC	105			//
+		DEC	118			//
+		DEC	105			//
+		DEC	115			//
+		DEC	111			//
+		DEC	110			//
+		DEC	32			//
+		DEC	98			//
+		DEC	121			//
+		DEC	32			//
+		DEC	48			//
+		DEC	35			//
